@@ -44,7 +44,7 @@ export const placeBet = async (params: {
       periodNumber: params.periodNumber
     };
     
-    const response = await fetch(`${BASE_URL}/place-bet`, {
+    const response = await fetch(`${BASE_URL}/color/place-bet`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
