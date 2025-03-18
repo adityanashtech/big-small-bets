@@ -37,7 +37,7 @@ export const placeBet = async (params: {
 }) => {
   try {
     const payload = {
-      userId: 13, // Using test user ID
+      userId: 29, // Updated from 13 to 29
       betType: params.betType,
       betValue: params.betValue,
       amount: params.amount,
