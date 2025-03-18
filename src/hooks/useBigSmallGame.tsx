@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { initDB, getTimer, saveTimer, updateTimer } from "../utils/indexedDB";
 import { fetchGameResults, placeBet } from "../services/api";
@@ -21,7 +20,7 @@ export const useBigSmallGame = () => {
   const [contractMoney, setContractMoney] = useState<number | null>(null);
   const [agreed, setAgreed] = useState(false);
   const [records, setRecords] = useState<GameRecord[]>([]); // State to store fetched data
-  const [currentPeriod, setCurrentPeriod] = useState<string>("");
+  const [currentPeriod, setCurrentPeriod] = useState<string>("1"); // Set static period as "1"
   const [isLoading, setIsLoading] = useState(true);
 
   // Available timer durations in minutes
@@ -34,8 +33,8 @@ export const useBigSmallGame = () => {
       const data = await fetchGameResults();
       if (data && data.length > 0) {
         setRecords(data);
-        // Set current period from the latest record
-        setCurrentPeriod(data[0]?.period || generatePeriod());
+        // Always keep period as "1" for testing
+        setCurrentPeriod("1");
       } else {
         // Fallback to mock data if API fails
         generateMockData();
@@ -112,8 +111,8 @@ export const useBigSmallGame = () => {
               // Timer reset, fetch new results
               if (duration === activeTime) {
                 fetchResults();
-                // Generate new period
-                setCurrentPeriod(generatePeriod());
+                // Keep period as "1" for testing
+                setCurrentPeriod("1");
               }
             }
 
@@ -154,25 +153,20 @@ export const useBigSmallGame = () => {
     fetchResults();
   };
 
-  // Generate a random period number
+  // Generate a random period number - not used now since we're using static "1"
   const generatePeriod = () => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const random = Math.floor(1000 + Math.random() * 9000);
-    return `${year}${month}${day}${random}`;
+    return "1"; // Always return "1" for testing
   };
 
   const generateMockData = () => {
     const mockData = Array.from({ length: 20 }, (_, i) => ({
-      period: `20250227${Math.floor(1000 + Math.random() * 9000)}`,
+      period: "1", // Static period for testing
       number: Math.floor(Math.random() * 10),
       color: Math.random() > 0.5 ? "green" : "red",
       small_big: Math.random() > 0.5 ? "Small" : "Big"
     }));
     setRecords(mockData);
-    setCurrentPeriod(mockData[0]?.period || generatePeriod());
+    setCurrentPeriod("1"); // Always use "1" for testing
   };
 
   const formatTime = (seconds: number) => {
@@ -211,7 +205,7 @@ export const useBigSmallGame = () => {
         betType,
         betValue,
         amount: contractMoney,
-        periodNumber: currentPeriod
+        periodNumber: "1" // Always use "1" for testing
       });
       
       if (result) {

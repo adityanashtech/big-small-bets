@@ -41,7 +41,7 @@ export const placeBet = async (params: {
       betType: params.betType,
       betValue: params.betValue,
       amount: params.amount,
-      periodNumber: params.periodNumber
+      periodNumber: "1" // Using static period number "1" for testing
     };
     
     const response = await fetch(`${BASE_URL}/color/place-bet`, {
